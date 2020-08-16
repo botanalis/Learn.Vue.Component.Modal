@@ -35,7 +35,23 @@ export default {
     onClose(){
       console.log("close modal");
       this.isActive = false;
+    },
+    onOutside(event){
+      console.log('trigger out side close modal');
+      if (event.target.className === 'modal'){
+        console.log("out side close modal");
+        this.onClose();
+      }
     }
+  },
+  created() {
+    this.$nextTick(() => {
+      document.addEventListener('click', this.onOutside);
+    });
+  },
+  beforeDestroy() {
+    console.log('Destroy out side close modal event listener');
+    document.removeEventListener('click', this.onOutside);
   }
 }
 </script>
